@@ -1,0 +1,48 @@
+.sec-filings {
+  overflow-x: auto;
+  padding: 16px 0;
+}
+
+.sec-filings table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--body-font-size-xs);
+}
+
+.sec-filings th,
+.sec-filings td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+  white-space: nowrap;
+}
+
+.sec-filings thead th {
+  background-color: var(--dark-color);
+  color: white;
+  font-weight: 700;
+}
+
+.sec-filings tbody tr:nth-child(even) {
+  background-color: var(--light-color);
+}
+
+.sec-filings tbody tr:hover {
+  background-color: #eef1ff;
+}
+
+.sec-filings a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.sec-filings a:hover {
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+@media (width >= 900px) {
+  .sec-filings table {
+    font-size: var(--body-font-size-s);
+  }
+}
