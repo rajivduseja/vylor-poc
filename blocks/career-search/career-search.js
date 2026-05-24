@@ -1,8 +1,21 @@
 export default function decorate(block) {
   const rows = [...block.children];
   const searchUrl = rows[0]?.textContent.trim() || '';
-  const employeeRow = rows[1];
-  const talentRow = rows[2];
+  const configRow = rows[1]?.textContent.trim() || '';
+  const targetRow = rows[2]?.textContent.trim() || '';
+  const employeeRow = rows[3];
+  const talentRow = rows[4];
+
+  // Parse config: "titleParam,locationParam,newTab"
+  const configParts = configRow.split(',').map((s) => s.trim());
+  const titleParam = configParts[0] || 'query';
+  const locationParam = configParts[1] || 'location';
+  const openInNewTab = (configParts[2] || 'true').toLowerCase() === 'true';
+
+  // Parse target row: "employeeLinkTarget, talentLinkTarget"
+  const targetParts = targetRow.split(',').map((s) => s.trim());
+  const employeeLinkTarget = targetParts[0] || '_blank';
+  const talentLinkTarget = targetParts[1] || '_blank';
 
   block.textContent = '';
 
@@ -20,9 +33,13 @@ export default function decorate(block) {
     const title = form.querySelector('[name="title"]').value.trim();
     const location = form.querySelector('[name="location"]').value.trim();
     const url = new URL(searchUrl, window.location.origin);
-    if (title) url.searchParams.set('query', title);
-    if (location) url.searchParams.set('location', location);
-    window.open(url.toString(), '_blank');
+    if (title) url.searchParams.set(titleParam, title);
+    if (location) url.searchParams.set(locationParam, location);
+    if (openInNewTab) {
+      window.open(url.toString(), '_blank');
+    } else {
+      window.location.href = url.toString();
+    }
   });
 
   const titleWrapper = document.createElement('div');
@@ -59,7 +76,7 @@ export default function decorate(block) {
           return;
         }
         suggestions.forEach((item) => {
-          const label = typeof item === 'string' ? item : item.label || item.text || item.value || '';
+          const label = typeof item === 'string' ? item : item.term || item.label || item.text || item.value || '';
           if (!label) return;
           const li = document.createElement('li');
           li.textContent = label;
@@ -118,7 +135,7 @@ export default function decorate(block) {
           return;
         }
         suggestions.forEach((item) => {
-          const label = typeof item === 'string' ? item : item.label || item.text || item.value || '';
+          const label = typeof item === 'string' ? item : item.term || item.label || item.text || item.value || '';
           if (!label) return;
           const li = document.createElement('li');
           li.textContent = label;
@@ -156,6 +173,10 @@ export default function decorate(block) {
     const employeeDiv = document.createElement('div');
     employeeDiv.className = 'career-search-employee';
     employeeDiv.innerHTML = employeeRow.innerHTML;
+    employeeDiv.querySelectorAll('a').forEach((a) => {
+      a.target = employeeLinkTarget;
+      if (employeeLinkTarget === '_blank') a.rel = 'noopener noreferrer';
+    });
     searchSection.append(employeeDiv);
   }
 
@@ -166,6 +187,10 @@ export default function decorate(block) {
     const talentSection = document.createElement('div');
     talentSection.className = 'career-search-talent';
     talentSection.innerHTML = talentRow.innerHTML;
+    talentSection.querySelectorAll('a').forEach((a) => {
+      a.target = talentLinkTarget;
+      if (talentLinkTarget === '_blank') a.rel = 'noopener noreferrer';
+    });
     block.append(talentSection);
   }
 }
