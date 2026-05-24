@@ -1,0 +1,188 @@
+.career-search {
+  background-color: #f5f5f5;
+  padding: 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Search form section */
+.career-search .career-search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 32px 40px;
+}
+
+.career-search .career-search-form h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 900;
+  color: #1a1a1a;
+}
+
+.career-search form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Autocomplete wrapper */
+.career-search .career-search-autocomplete {
+  position: relative;
+  flex: 1;
+}
+
+.career-search form input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 2px solid #1a1a1a;
+  border-radius: 0;
+  background: white;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.career-search .career-search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
+}
+
+.career-search .career-search-suggestions[hidden] {
+  display: none;
+}
+
+.career-search .career-search-suggestions li {
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.career-search .career-search-suggestions li:hover {
+  background-color: #eef1ff;
+}
+
+.career-search form input:focus {
+  border-color: var(--link-color);
+}
+
+.career-search form input::placeholder {
+  color: #666;
+}
+
+.career-search form button {
+  padding: 14px 28px;
+  background-color: #0072ce;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  transition: background-color 0.2s;
+}
+
+.career-search form button:hover {
+  background-color: #005ba1;
+}
+
+.career-search form button svg {
+  display: block;
+}
+
+/* Employee link */
+.career-search .career-search-employee {
+  text-align: right;
+  font-size: 14px;
+  color: #555;
+}
+
+.career-search .career-search-employee a {
+  color: #0072ce;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+/* Talent network section */
+.career-search .career-search-talent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 40px;
+  border-top: 1px solid #ddd;
+  background-color: #fff;
+}
+
+.career-search .career-search-talent div {
+  display: contents;
+}
+
+.career-search .career-search-talent p {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.career-search .career-search-talent a {
+  display: inline-block;
+  padding: 14px 32px;
+  background-color: #0072ce;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+/* Link hover states */
+.career-search .career-search-employee a:hover {
+  color: #005ba1;
+}
+
+.career-search .career-search-talent a:hover {
+  background-color: #005ba1;
+}
+
+/* Desktop layout */
+@media (width >= 900px) {
+  .career-search .career-search-form {
+    flex-flow: row wrap;
+    align-items: center;
+  }
+
+  .career-search .career-search-form h2 {
+    flex: 0 0 auto;
+    margin-right: 16px;
+  }
+
+  .career-search form {
+    flex: 1;
+    flex-direction: row;
+  }
+
+  .career-search .career-search-employee {
+    flex: 0 0 100%;
+  }
+
+  .career-search .career-search-talent {
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+  }
+}
