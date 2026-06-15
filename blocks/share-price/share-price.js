@@ -69,6 +69,37 @@ async function fetchJson(params) {
   return resp.json();
 }
 
+// Alpha Vantage's free tier returns a "Note"/"Information" message instead of
+// data when the per-minute call limit is hit, in which case 52WeekHigh/Low are
+// absent. Cache the slow-changing OVERVIEW response so a throttled call falls
+// back to the last good values instead of rendering "—".
+async function fetchOverview(symbol, apikey) {
+  const cacheKey = `share-price-overview-${symbol}`;
+  let cached;
+  try {
+    cached = JSON.parse(sessionStorage.getItem(cacheKey));
+  } catch {
+    cached = null;
+  }
+
+  try {
+    const data = await fetchJson({ function: 'OVERVIEW', symbol, apikey });
+    if (data['52WeekHigh'] || data['52WeekLow']) {
+      const fresh = { '52WeekHigh': data['52WeekHigh'], '52WeekLow': data['52WeekLow'] };
+      try {
+        sessionStorage.setItem(cacheKey, JSON.stringify(fresh));
+      } catch {
+        // sessionStorage unavailable (private mode/quota) — non-fatal
+      }
+      return fresh;
+    }
+  } catch {
+    // fall through to cached value
+  }
+
+  return cached || {};
+}
+
 export default async function decorate(block) {
   const config = readConfig(block);
   const symbol = (config.symbol || 'CTVA').toUpperCase();
@@ -90,7 +121,7 @@ export default async function decorate(block) {
   try {
     const [quoteData, overviewData] = await Promise.all([
       fetchJson({ function: 'GLOBAL_QUOTE', symbol, apikey }),
-      fetchJson({ function: 'OVERVIEW', symbol, apikey }),
+      fetchOverview(symbol, apikey),
     ]);
 
     const quote = quoteData['Global Quote'] || {};

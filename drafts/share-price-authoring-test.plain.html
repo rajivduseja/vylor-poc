@@ -1,0 +1,111 @@
+<div class="share-price-intro">
+  <h2>Share Price — Authoring Test</h2>
+  <p>This page exercises every authorable option of the Share Price block. Each section below documents what is being tested.</p>
+</div>
+<div class="section-metadata">
+  <div>
+    <div>Style</div>
+    <div>dark</div>
+  </div>
+</div>
+<div>
+  <h3>1. Full configuration (Label + Symbol + APIKey)</h3>
+  <p>All three rows authored. Should render CTVA data with the "FPO Share Information" label.</p>
+  <div class="share-price">
+    <div>
+      <div>Label</div>
+      <div>FPO Share Information</div>
+    </div>
+    <div>
+      <div>Symbol</div>
+      <div>CTVA</div>
+    </div>
+    <div>
+      <div>APIKey</div>
+      <div>WB1XJII7C05SZLNQ</div>
+    </div>
+  </div>
+</div>
+<div class="section-metadata">
+  <div>
+    <div>Style</div>
+    <div>dark</div>
+  </div>
+</div>
+<div>
+  <h3>2. Different symbol + custom label</h3>
+  <p>Tests reuse with another ticker (AAPL) and an author-supplied label.</p>
+  <div class="share-price">
+    <div>
+      <div>Label</div>
+      <div>Apple Inc. Stock</div>
+    </div>
+    <div>
+      <div>Symbol</div>
+      <div>AAPL</div>
+    </div>
+    <div>
+      <div>APIKey</div>
+      <div>WB1XJII7C05SZLNQ</div>
+    </div>
+  </div>
+</div>
+<div class="section-metadata">
+  <div>
+    <div>Style</div>
+    <div>dark</div>
+  </div>
+</div>
+<div>
+  <h3>3. Symbol only (defaults applied)</h3>
+  <p>No Label or APIKey rows. Should fall back to the default label "FPO Share Information" and the built-in API key.</p>
+  <div class="share-price">
+    <div>
+      <div>Symbol</div>
+      <div>MSFT</div>
+    </div>
+  </div>
+</div>
+<div class="section-metadata">
+  <div>
+    <div>Style</div>
+    <div>dark</div>
+  </div>
+</div>
+<div>
+  <h3>4. Empty block (all defaults)</h3>
+  <p>No rows authored at all. Should default to symbol CTVA, default label, and built-in key.</p>
+  <div class="share-price">
+    <div></div>
+  </div>
+</div>
+<div class="section-metadata">
+  <div>
+    <div>Style</div>
+    <div>dark</div>
+  </div>
+</div>
+<div>
+  <h3>5. Invalid symbol (error handling)</h3>
+  <p>An unknown ticker. Should show the graceful "data is currently unavailable" message rather than breaking.</p>
+  <div class="share-price">
+    <div>
+      <div>Label</div>
+      <div>Invalid Ticker Test</div>
+    </div>
+    <div>
+      <div>Symbol</div>
+      <div>ZZZZINVALID</div>
+    </div>
+    <div>
+      <div>APIKey</div>
+      <div>WB1XJII7C05SZLNQ</div>
+    </div>
+  </div>
+</div>
+<div class="section-metadata">
+  <div>
+    <div>Style</div>
+    <div>dark</div>
+  </div>
+</div>
